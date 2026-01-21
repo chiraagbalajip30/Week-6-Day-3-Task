@@ -1,8 +1,8 @@
 import { useContext } from "react";
 import { cartContext } from "../context/CartContext";
 
-const ProductCard = ({product}) => {
-  const {addToCart} = useContext(cartContext);
+const ProductCard = ({ product }) => {
+  const { addToCart } = useContext(cartContext);
 
   return (
     <div className="border border-gray-200 rounded-md p-4 flex items-center justify-between">
