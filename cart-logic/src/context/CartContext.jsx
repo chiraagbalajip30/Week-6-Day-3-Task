@@ -27,20 +27,78 @@ const CartProvider = ({ children }) => {
     });
   };
 
-  // 5️⃣ Action: remove item from cart
-  // const removeFromCart = (product) => {
-  //     setCartItems((prevItems) => prevItems.filter((item) => item.id !== product.id));
-  // };
+  // 5: Increase quantity
+  const increaseQty = (id) => {
+    setCartItems((prevItems) =>
+      prevItems.map((item) =>
+        item.id === id ? { ...item, quantity: item.quantity + 1 } : item,
+      ),
+    );
+  };
+
+  // 5: Decrease quantity (minimum = 1)
+  const decreaseQty = (id) => {
+    setCartItems((prevItems) =>
+      prevItems.map((item) =>
+        item.id === id && item.quantity > 1
+          ? { ...item, quantity: item.quantity - 1 }
+          : item,
+      ),
+    );
+  };
 
   // 6️⃣ Return the Provider component
   return (
-    <cartContext.Provider value={{ cartItems, addToCart }}>
+    <cartContext.Provider value={{ cartItems, addToCart, increaseQty, decreaseQty }}>
       {children}
     </cartContext.Provider>
   );
 };
 
 export default CartProvider;
+
+// -------------------------------------------
+
+// import { createContext, useState } from "react";
+
+// // 1️⃣ Create the context
+// export const cartContext = createContext();
+
+// // 2️⃣ Create the Provider component
+// const CartProvider = ({ children }) => {
+//   // 3️⃣ Global cart state
+//   const [cartItems, setCartItems] = useState([]);
+
+//   // 4️⃣ Improved addToCart logic (no duplicates)
+//   const addToCart = (product) => {
+//     setCartItems((prevItems) => {
+//       const existingItem = prevItems.find((item) => item.id === product.id);
+
+//       if (existingItem) {
+//         // product already in cart → increase quantity
+//         return prevItems.map((item) =>
+//           item.id === product.id
+//             ? { ...item, quantity: item.quantity + 1 }
+//             : item,
+//         );
+//       }
+
+//       // product not in cart → add with quantity = 1
+//       return [...prevItems, { ...product, quantity: 1 }];
+//     });
+//   };
+
+//   // 6️⃣ Return the Provider component
+//   return (
+//     <cartContext.Provider value={{ cartItems, addToCart }}>
+//       {children}
+//     </cartContext.Provider>
+//   );
+// };
+
+// export default CartProvider;
+
+//  ------------------------------------------------
 
 // Day-2 Logic
 
